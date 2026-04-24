@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hobit Capital — Твоё время = Твой капитал</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060A0E;
+    --surface: #0C1218;
+    --surface2: #111820;
+    --surface3: #18222C;
+    --accent: #00FFB2;
+    --accent2: #FF6B35;
+    --accent3: #7B61FF;
+    --text: #EEF2F6;
+    --muted: #5A7080;
+    --border: rgba(0,255,178,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Manrope',sans-serif; overflow-x:hidden; cursor:none; }
+
+  .cursor { width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;mix-blend-mode:difference;transform:translate(-50%,-50%); }
+  .cursor-ring { width:34px;height:34px;border:1.5px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:0.4;transition:width 0.2s,height 0.2s; }
+
+  body::before { content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,178,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,178,0.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0; }
+
+  nav { position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 60px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(24px);background:rgba(6,10,14,0.88);border-bottom:1px solid var(--border); }
+  .logo-wrap { display:flex;align-items:center;gap:12px;text-decoration:none; }
+  .logo-text { font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.5px;color:var(--text); }
+  .logo-text span { color:var(--accent); }
+  .nav-links { display:flex;gap:32px;list-style:none; }
+  .nav-links a { color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s; }
+  .nav-links a:hover { color:var(--accent); }
+  .nav-btn { background:var(--accent);color:var(--bg);padding:10px 22px;border-radius:6px;font-weight:700;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;border:none;cursor:none;transition:all 0.2s; }
+  .nav-btn:hover { background:#00e8a2;box-shadow:0 0 24px rgba(0,255,178,0.4); }
+
+  .hero { min-height:100vh;display:flex;align-items:center;padding:130px 60px 80px;position:relative;z-index:1; }
+  .hero-content { max-width:680px; }
+  .hero-badge { display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,178,0.07);border:1px solid var(--border);padding:6px 16px;border-radius:100px;font-size:11px;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:36px;animation:fadeUp 0.7s ease both; }
+  .hero-badge::before { content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s infinite; }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+  .hero h1 { font-family:'Syne',sans-serif;font-size:clamp(52px,6.5vw,90px);font-weight:800;line-height:0.93;letter-spacing:-3px;margin-bottom:28px;animation:fadeUp 0.7s 0.12s ease both; }
+  .hero h1 em { font-style:normal;color:var(--accent); }
+  .hero h1 .dim { color:var(--muted); }
+  .hero-sub { font-size:17px;color:var(--muted);line-height:1.75;max-width:480px;margin-bottom:48px;font-weight:300;animation:fadeUp 0.7s 0.24s ease both; }
+  .hero-btns { display:flex;gap:16px;align-items:center;animation:fadeUp 0.7s 0.36s ease both; }
+  .btn-main { background:var(--accent);color:var(--bg);padding:16px 36px;border-radius:6px;font-weight:700;font-size:15px;border:none;cursor:none;display:inline-flex;align-items:center;gap:10px;transition:all 0.2s;text-decoration:none; }
+  .btn-main:hover { background:#00e8a2;transform:translateY(-2px);box-shadow:0 16px 48px rgba(0,255,178,0.28); }
+  .btn-outline { color:var(--muted);font-size:14px;cursor:none;display:flex;align-items:center;gap:8px;background:none;border:none;transition:color 0.2s;text-decoration:none; }
+  .btn-outline:hover { color:var(--text); }
+
+  .hero-float { position:absolute;right:60px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:16px;animation:fadeUp 0.7s 0.5s ease both; }
+  .fcard { background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 22px;min-width:210px;position:relative;overflow:hidden; }
+  .fcard::after { content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,var(--accent),transparent); }
+  .fcard-num { font-family:'Space Mono',monospace;font-size:30px;font-weight:700;color:var(--accent);line-height:1; }
+  .fcard-num.o{color:var(--accent2)}.fcard-num.p{color:var(--accent3)}
+  .fcard-lbl { font-size:11px;color:var(--muted);margin-top:5px;text-transform:uppercase;letter-spacing:0.07em; }
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+  section { position:relative;z-index:1;padding:96px 60px; }
+  .stag { display:flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px; }
+  .stag::before { content:'';width:20px;height:1px;background:var(--accent); }
+  h2.sh { font-family:'Syne',sans-serif;font-size:clamp(30px,4vw,52px);font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:20px; }
+
+  .process-wrap { background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
+  .process-head { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px; }
+  .process-desc { color:var(--muted);font-size:15px;max-width:340px;line-height:1.7; }
+  .steps { display:grid;grid-template-columns:repeat(3,1fr);gap:2px; }
+  .step { background:var(--surface2);padding:40px 36px;position:relative;overflow:hidden;transition:background 0.3s; }
+  .step:hover { background:rgba(0,255,178,0.035); }
+  .step-n { font-family:'Space Mono',monospace;font-size:80px;font-weight:700;color:rgba(0,255,178,0.05);position:absolute;top:10px;right:20px;line-height:1;user-select:none; }
+  .step-ico { width:46px;height:46px;background:rgba(0,255,178,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:22px; }
+  .step h3 { font-family:'Syne',sans-serif;font-size:19px;font-weight:700;margin-bottom:10px;letter-spacing:-0.5px; }
+  .step p { color:var(--muted);font-size:14px;line-height:1.7; }
+  .step p strong { color:var(--accent);font-weight:600; }
+
+  .dash-center { text-align:center;margin-bottom:56px; }
+  .dash-center .stag { justify-content:center; }
+  .dash-center .stag::before { display:none; }
+  .dash-mock { background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;max-width:960px;margin:0 auto;box-shadow:0 40px 100px rgba(0,0,0,0.7),0 0 80px rgba(0,255,178,0.04); }
+  .dash-bar { background:var(--surface2);padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border); }
+  .dot{width:10px;height:10px;border-radius:50%}.dot.r{background:#FF5F57}.dot.y{background:#FEBC2E}.dot.g{background:#28C840}
+  .dash-url { flex:1;text-align:center;max-width:280px;margin:0 auto;background:rgba(0,0,0,0.35);border-radius:6px;padding:5px 14px;font-family:'Space Mono',monospace;font-size:10px;color:var(--muted); }
+  .dash-grid { padding:28px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px; }
+  .dc { background:var(--surface2);border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:18px; }
+  .dc.w2{grid-column:span 2}.dc.w3{grid-column:span 3}
+  .dc-title { font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px; }
+  .dc-big { font-family:'Space Mono',monospace;font-size:32px;font-weight:700;color:var(--accent2);line-height:1; }
+  .dc-sub { font-size:11px;color:var(--muted);margin-top:3px; }
+  .dc-roi { font-family:'Space Mono',monospace;font-size:26px;color:var(--accent); }
+  .pbar { background:rgba(255,255,255,0.05);border-radius:100px;height:5px;margin:10px 0 5px; }
+  .pfill { height:100%;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent3)); }
+  .pill { display:inline-flex;align-items:center;gap:5px;background:rgba(0,255,178,0.08);border:1px solid var(--border);border-radius:100px;padding:3px 10px;font-size:11px;color:var(--accent);margin:3px 3px 0 0; }
+  .plan-row { display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.03);font-size:12px; }
+  .pdot { width:5px;height:5px;background:var(--accent);border-radius:50%;margin-top:5px;flex-shrink:0; }
+  .mini-bar { border-radius:3px 3px 0 0; }
+
+  .phil-grid { display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
+  .phil-text p { color:var(--muted);line-height:1.8;font-size:16px;margin-bottom:14px; }
+  .quote { border-left:2px solid var(--accent);padding:18px 22px;margin:28px 0;background:rgba(0,255,178,0.04);border-radius:0 8px 8px 0;font-size:17px;line-height:1.65;color:var(--text); }
+  .formula-box { background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;position:relative;overflow:hidden; }
+  .formula-box::before { content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,255,178,0.07) 0%,transparent 70%); }
+  .formula { font-family:'Space Mono',monospace;font-size:clamp(13px,1.6vw,17px);line-height:2.1;position:relative;z-index:1; }
+  .fvar{color:var(--accent)}.fop{color:var(--muted)}.fres{color:var(--accent2);font-size:1.2em}
+
+  .cta-wrap { background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center; }
+  .cta-wrap p { color:var(--muted);max-width:460px;margin:0 auto 36px; }
+  footer { padding:36px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1; }
+  footer p { color:var(--muted);font-size:13px; }
+
+  /* ── MODAL ── */
+  .overlay { position:fixed;inset:0;z-index:1000;background:rgba(4,8,12,0.94);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s; }
+  .overlay.open { opacity:1;pointer-events:all; }
+  .modal { background:var(--surface);border:1px solid var(--border);border-radius:20px;width:100%;max-width:560px;margin:20px;position:relative;overflow:hidden;transform:translateY(28px);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1); max-height:calc(100vh - 40px); display:flex; flex-direction:column; }
+  .overlay.open .modal { transform:translateY(0); }
+  .modal::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent3)); }
+  .modal-top { padding:32px 32px 0;display:flex;justify-content:space-between;align-items:flex-start; }
+  .modal-top h3 { font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-1px; }
+  .mcls { width:32px;height:32px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-size:18px;cursor:none;display:flex;align-items:center;justify-content:center;transition:all 0.2s; }
+  .mcls:hover { color:var(--text);border-color:var(--accent); }
+  .seg-bar { display:flex;gap:6px;padding:20px 32px 0; }
+  .seg { flex:1;height:3px;border-radius:100px;background:var(--surface3);transition:background 0.3s; }
+  .seg.done{background:var(--accent)}.seg.act{background:var(--accent);opacity:0.5}
+  .seg-lbl { padding:8px 32px 0;font-size:11px;color:var(--muted);font-family:'Space Mono',monospace; }
+  .mbody { padding:24px 32px 32px; overflow-y:auto; }
+  .fstep { display:none; }
+  .fstep.on { display:block; }
+  .fq { font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.5px;margin-bottom:20px;line-height:1.3; }
+  .ff { margin-bottom:16px; }
+  .ff label { display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px; }
+  .ff input, .ff select { width:100%;padding:12px 16px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;color:var(--text);font-family:'Manrope',sans-serif;font-size:14px;transition:border-color 0.2s;cursor:none; }
+  .ff input:focus,.ff select:focus { outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,255,178,0.08); }
+  .ff select option { background:var(--surface2); }
+  .choices { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+  .cb { padding:14px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.07);background:var(--surface2);color:var(--muted);font-family:'Manrope',sans-serif;font-size:13px;font-weight:500;text-align:left;cursor:none;transition:all 0.2s;display:flex;align-items:center;gap:10px; }
+  .cb:hover { border-color:var(--border);color:var(--text); }
+  .cb.sel { border-color:var(--accent);color:var(--accent);background:rgba(0,255,178,0.06); }
+  .range-wrap input[type=range] { -webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--surface3);border-radius:100px;border:none;outline:none;padding:0; }
+  .range-wrap input[type=range]::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:none;box-shadow:0 0 8px rgba(0,255,178,0.5); }
+  .rval { font-family:'Space Mono',monospace;color:var(--accent);font-size:13px;text-align:right;margin-top:6px; }
+  .fact { display:flex;justify-content:space-between;align-items:center;margin-top:24px; }
+  .bbk { color:var(--muted);font-size:13px;background:none;border:none;cursor:none;transition:color 0.2s; }
+  .bbk:hover { color:var(--text); }
+  .bnx { background:var(--accent);color:var(--bg);padding:12px 28px;border-radius:6px;font-weight:700;font-size:14px;border:none;cursor:none;transition:all 0.2s; }
+  .bnx:hover { background:#00e8a2;box-shadow:0 8px 24px rgba(0,255,178,0.3); }
+  .rcard { background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px; }
+  .rbig { font-family:'Space Mono',monospace;font-size:42px;font-weight:700;color:var(--accent);line-height:1; }
+  .rbig.red { color:var(--accent2); }
+  .rrow { display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px; }
+  .rrow span:last-child { color:var(--accent);font-weight:600; }
+  .rplan { background:rgba(0,255,178,0.05);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:12px;font-size:13px;line-height:1.7;color:var(--muted); }
+  .rplan strong { color:var(--accent);display:block;margin-bottom:6px;font-size:14px; }
+
+  .rev { opacity:0;transform:translateY(24px);transition:opacity 0.6s,transform 0.6s; }
+  .rev.in { opacity:1;transform:none; }
+
+  /* ── PARTICLES ── */
+  #particles { position:fixed;inset:0;pointer-events:none;z-index:0; }
+
+  /* ── SOCIAL PROOF BAR ── */
+  .proof-bar { background:rgba(0,255,178,0.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 60px;display:flex;align-items:center;justify-content:center;gap:40px;position:relative;z-index:1;overflow:hidden; }
+  .proof-item { display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);white-space:nowrap; }
+  .proof-item strong { color:var(--text); }
+  .proof-sep { width:1px;height:24px;background:var(--border); }
+  .live-dot { width:7px;height:7px;background:#00FFB2;border-radius:50%;animation:blink 1.5s infinite;flex-shrink:0; }
+
+  /* ── CASES ── */
+  .cases-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px; }
+  .case-card { background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s; }
+  .case-card:hover { transform:translateY(-4px);box-shadow:0 24px 64px rgba(0,0,0,0.5),0 0 40px rgba(0,255,178,0.06); }
+  .case-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent3)); }
+  .case-avatar { width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px; }
+  .case-name { font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:2px; }
+  .case-role { font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px; }
+  .case-income { font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:4px; }
+  .case-period { font-size:11px;color:var(--muted);margin-bottom:16px; }
+  .case-quote { font-size:13px;color:var(--muted);line-height:1.7;font-style:italic;border-left:2px solid rgba(0,255,178,0.3);padding-left:12px; }
+  .case-tag { display:inline-flex;align-items:center;gap:4px;background:rgba(123,97,255,0.1);border:1px solid rgba(123,97,255,0.2);border-radius:100px;padding:3px 10px;font-size:10px;color:var(--accent3);margin-top:14px; }
+
+  /* ── ROI CALCULATOR ── */
+  .calc-wrap { background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;max-width:900px;margin:48px auto 0;display:grid;grid-template-columns:1fr 1fr; }
+  .calc-left { padding:40px; }
+  .calc-right { padding:40px;background:var(--surface2);border-left:1px solid var(--border);display:flex;flex-direction:column;justify-content:center; }
+  .calc-label { font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;margin-top:20px; }
+  .calc-label:first-child { margin-top:0; }
+  .calc-result-big { font-family:'Space Mono',monospace;font-size:52px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:6px; }
+  .calc-result-sub { font-size:13px;color:var(--muted);margin-bottom:24px; }
+  .calc-breakdown { display:flex;flex-direction:column;gap:10px; }
+  .cbr { display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(0,0,0,0.3);border-radius:8px; }
+  .cbr-label { font-size:12px;color:var(--muted); }
+  .cbr-val { font-family:'Space Mono',monospace;font-size:13px;color:var(--accent); }
+
+  /* ── FAQ ── */
+  .faq-list { max-width:720px;margin:48px auto 0;display:flex;flex-direction:column;gap:4px; }
+  .faq-item { border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.3s; }
+  .faq-item.open { border-color:rgba(0,255,178,0.3); }
+  .faq-q { padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:16px;user-select:none; }
+  .faq-q span:first-child { font-family:'Syne',sans-serif;font-size:16px;font-weight:700;letter-spacing:-0.3px; }
+  .faq-icon { width:28px;height:28px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.3s;font-size:14px;color:var(--accent); }
+  .faq-item.open .faq-icon { background:rgba(0,255,178,0.1);transform:rotate(45deg); }
+  .faq-a { max-height:0;overflow:hidden;transition:max-height 0.4s ease; }
+  .faq-a-inner { padding:0 24px 20px;font-size:14px;color:var(--muted);line-height:1.75; }
+  .faq-a-inner strong { color:var(--accent); }
+
+  /* ── TOAST ── */
+  .toast-wrap { position:fixed;bottom:32px;right:32px;z-index:5000;display:flex;flex-direction:column;gap:10px; }
+  .toast { background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;min-width:260px;max-width:320px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 16px 48px rgba(0,0,0,0.6);animation:toastIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
+  @keyframes toastIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:none}}
+  .toast-icon { font-size:20px;flex-shrink:0; }
+  .toast-text strong { display:block;font-size:13px;margin-bottom:2px; }
+  .toast-text span { font-size:12px;color:var(--muted); }
+
+  /* ── TIMER ── */
+  .timer-bar { display:flex;align-items:center;justify-content:center;gap:20px;margin-top:24px; }
+  .timer-unit { text-align:center; }
+  .timer-num { font-family:'Space Mono',monospace;font-size:36px;font-weight:700;color:var(--accent2);line-height:1; }
+  .timer-label { font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:2px; }
+  .timer-sep { font-family:'Space Mono',monospace;font-size:28px;color:var(--border);line-height:1;margin-bottom:14px; }
+
+  /* ── AI CHAT WIDGET ── */
+  .ai-chat-btn { position:fixed;bottom:32px;left:32px;z-index:4999;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent3));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(0,255,178,0.3);transition:all 0.3s;animation:chatPulse 2s infinite; }
+  .ai-chat-btn:hover { transform:scale(1.1);box-shadow:0 12px 40px rgba(0,255,178,0.5); }
+  .ai-chat-btn svg { width:28px;height:28px;fill:var(--bg); }
+  @keyframes chatPulse { 0%,100%{box-shadow:0 8px 32px rgba(0,255,178,0.3)} 50%{box-shadow:0 8px 32px rgba(0,255,178,0.6)} }
+
+  .ai-chat-panel { position:fixed;bottom:104px;left:32px;z-index:5001;width:380px;max-height:520px;background:var(--surface);border:1px solid var(--border);border-radius:20px;display:none;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,0.7);overflow:hidden;animation:chatSlideUp 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+  .ai-chat-panel.open { display:flex; }
+  @keyframes chatSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+
+  .ai-chat-head { padding:18px 20px;background:linear-gradient(135deg,rgba(0,255,178,0.08),rgba(123,97,255,0.08));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px; }
+  .ai-chat-head-dot { width:10px;height:10px;background:var(--accent);border-radius:50%;animation:blink 1.5s infinite; }
+  .ai-chat-head-title { font-family:'Syne',sans-serif;font-size:15px;font-weight:700;flex:1; }
+  .ai-chat-close { background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:4px;transition:color 0.2s; }
+  .ai-chat-close:hover { color:var(--text); }
+
+  .ai-chat-body { flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:280px;max-height:340px; }
+  .ai-msg { max-width:88%;padding:12px 16px;border-radius:14px;font-size:13px;line-height:1.65;animation:msgFade 0.3s ease; }
+  @keyframes msgFade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+  .ai-msg.bot { background:var(--surface2);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px; }
+  .ai-msg.user { background:linear-gradient(135deg,rgba(0,255,178,0.15),rgba(123,97,255,0.15));border:1px solid rgba(0,255,178,0.2);color:var(--text);align-self:flex-end;border-bottom-right-radius:4px; }
+  .ai-msg.typing { color:var(--muted); }
+  .ai-msg.typing::after { content:'';display:inline-block;width:4px;height:4px;background:var(--accent);border-radius:50%;margin-left:6px;animation:typeDot 1s infinite; }
+  @keyframes typeDot { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  .ai-chat-input { display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface2); }
+  .ai-chat-input input { flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-family:'Manrope',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s; }
+  .ai-chat-input input:focus { border-color:var(--accent); }
+  .ai-chat-input button { background:var(--accent);border:none;border-radius:10px;padding:10px 16px;cursor:pointer;color:var(--bg);font-weight:700;font-size:13px;transition:all 0.2s; }
+  .ai-chat-input button:hover { background:#00e6a0; }
+
+  .ai-chat-quick { display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px; }
+  .ai-chat-quick button { background:rgba(0,255,178,0.06);border:1px solid var(--border);border-radius:100px;padding:6px 12px;font-size:11px;color:var(--muted);cursor:pointer;font-family:'Manrope',sans-serif;transition:all 0.2s; }
+  .ai-chat-quick button:hover { border-color:var(--accent);color:var(--accent); }
+
+  @media(max-width:900px){
+    .cases-grid{grid-template-columns:1fr;}.calc-wrap{grid-template-columns:1fr;}.phil-grid{grid-template-columns:1fr;}
+    nav{padding:14px 20px;}.hero{padding:100px 20px 60px;}.section{padding:60px 20px;}
+    .steps{grid-template-columns:1fr;}.proof-bar{gap:16px;flex-wrap:wrap;padding:14px 20px;}
+    .ai-chat-panel{left:12px;right:12px;width:auto;bottom:96px;}
+    .ai-chat-btn{left:16px;bottom:16px;width:52px;height:52px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+<canvas id="particles"></canvas>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo-wrap" href="#">
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+      <rect width="38" height="38" rx="10" fill="#0C1218"/>
+      <rect x="0.5" y="0.5" width="37" height="37" rx="9.5" stroke="url(#nb)" stroke-opacity="0.5"/>
+      <rect x="8" y="9" width="5" height="20" rx="2" fill="url(#n1)"/>
+      <rect x="8" y="17.5" width="14" height="3" rx="1.5" fill="url(#n1)" opacity="0.6"/>
+      <rect x="17" y="9" width="5" height="20" rx="2" fill="url(#n1)"/>
+      <rect x="24" y="21" width="4" height="8" rx="1.5" fill="url(#n2)" opacity="0.85"/>
+      <rect x="29" y="15" width="4" height="14" rx="1.5" fill="url(#n2)"/>
+      <circle cx="31" cy="12.5" r="2.5" fill="#00FFB2"/>
+      <defs>
+        <linearGradient id="n1" x1="8" y1="9" x2="8" y2="29" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#60B8F5"/><stop offset="1" stop-color="#8B6FFF"/>
+        </linearGradient>
+        <linearGradient id="n2" x1="0" y1="0" x2="0" y2="1" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00FFB2"/><stop offset="1" stop-color="#00FFB2" stop-opacity="0.35"/>
+        </linearGradient>
+        <linearGradient id="nb" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00FFB2"/><stop offset="1" stop-color="#7B61FF"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="logo-text">Hobit<span>Capital</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#process">Процесс</a></li>
+    <li><a href="#cases">Кейсы</a></li>
+    <li><a href="#dashboard">Дашборд</a></li>
+    <li><a href="#calculator">Калькулятор</a></li>
+    <li><a href="#philosophy">Философия</a></li>
+  </ul>
+  <button class="nav-btn" onclick="openModal()">Начать анализ</button>
+</nav>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar">
+  <div class="proof-item"><div class="live-dot"></div><strong id="userCount">1,247</strong>&nbsp;пользователей онлайн</div>
+  <div class="proof-sep"></div>
+  <div class="proof-item">📊 Средний ROI через 30 дней: <strong>+$380</strong></div>
+  <div class="proof-sep"></div>
+  <div class="proof-item">⚡ Анализ за <strong>3 минуты</strong> · Бесплатно</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">SkillArbitrage · AI Platform</div>
+    <h1>
+      Твоё время —<br>
+      <em>твой капитал</em><br>
+      <span class="dim">не теряй его</span>
+    </h1>
+    <p class="hero-sub">
+      Мы не говорим «ты плохо живёшь». Мы показываем,
+      как превратить экранное время в рыночный навык
+      с конкретным прогнозом дохода.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-main" onclick="openModal()">Бесплатный аудит →</button>
+      <a class="btn-outline" href="#process">Как это работает ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-float">
+    <div class="fcard">
+      <div class="fcard-num" id="hero-counter">$0.00</div>
+      <div class="fcard-lbl">Упущено сегодня</div>
+    </div>
+    <div class="fcard">
+      <div class="fcard-num o">+$847</div>
+      <div class="fcard-lbl">Потенциал / месяц</div>
+    </div>
+    <div class="fcard">
+      <div class="fcard-num p">23 дня</div>
+      <div class="fcard-lbl">До первого заработка</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-wrap" id="process">
+  <div class="process-head rev">
+    <div>
+      <div class="stag">Как это работает</div>
+      <h2 class="sh">Три шага<br>к монетизации</h2>
+    </div>
+    <p class="process-desc">От аудита привычек до первого заработка — система выстраивает весь путь автоматически.</p>
+  </div>
+  <div class="steps">
+    <div class="step rev">
+      <div class="step-n">01</div>
+      <div class="step-ico">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="8" height="8" rx="2" fill="var(--accent)" opacity="0.85"/>
+          <rect x="13" y="3" width="8" height="8" rx="2" fill="var(--accent)" opacity="0.4"/>
+          <rect x="3" y="13" width="8" height="8" rx="2" fill="var(--accent)" opacity="0.4"/>
+          <rect x="13" y="13" width="8" height="8" rx="2" fill="var(--accent)" opacity="0.6"/>
+        </svg>
+      </div>
+      <h3>Аудит & Сбор</h3>
+      <p>Вводишь данные: экранное время, интересы, режим сна. Система не осуждает — она видит в этом <strong>сырьё для конверсии</strong>.</p>
+    </div>
+    <div class="step rev">
+      <div class="step-n">02</div>
+      <div class="step-ico">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="var(--accent)" stroke-width="1.5" opacity="0.35"/>
+          <circle cx="12" cy="12" r="5" stroke="var(--accent)" stroke-width="1.5" opacity="0.65"/>
+          <circle cx="12" cy="12" r="2" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <h3>AI-Анализ ниши</h3>
+      <p>ИИ сопоставляет твои паттерны с рыночным спросом. YouTube → видеомонтаж. Стратегии → QA. <strong>Математика, не угадайка</strong>.</p>
+    </div>
+    <div class="step rev">
+      <div class="step-n">03</div>
+      <div class="step-ico">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M3 17L8 12L12 15L17 9L21 12" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="21" cy="12" r="2" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <h3>Бизнес-план</h3>
+      <p>Конкретный план: модули обучения, практические задания, ссылки на биржи. <strong>ROI-прогноз</strong> на каждую вложенную неделю.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases" style="padding:96px 60px;position:relative;z-index:1">
+  <div class="rev" style="text-align:center">
+    <div class="stag" style="justify-content:center"><span>Реальные результаты</span></div>
+    <h2 class="sh">Они уже<br>монетизируют время</h2>
+    <p style="color:var(--muted);max-width:440px;margin:0 auto">Обычные студенты с теми же привычками — до и после HobitCapital</p>
+  </div>
+  <div class="cases-grid">
+    <div class="case-card rev">
+      <div class="case-avatar" style="background:rgba(0,255,178,0.1)">🎮</div>
+      <div class="case-name">Азат К.</div>
+      <div class="case-role">Алматы · 19 лет · Студент</div>
+      <div class="case-income">$420</div>
+      <div class="case-period">через 28 дней после аудита</div>
+      <div class="case-quote">«Думал, что геймерство — потеря времени. Теперь пишу тест-кейсы для игровых компаний. Первый заказ пришёл с Upwork.»</div>
+      <div class="case-tag">🎯 QA-тестировщик</div>
+    </div>
+    <div class="case-card rev">
+      <div class="case-avatar" style="background:rgba(255,107,53,0.1)">📺</div>
+      <div class="case-name">Дана С.</div>
+      <div class="case-role">Астана · 21 год · Маркетинг</div>
+      <div class="case-income">$280</div>
+      <div class="case-period">первый заказ на 21-й день</div>
+      <div class="case-quote">«6 часов YouTube в день оказались насмотренностью. Я монтирую короткие ролики для бизнеса — $30 за штуку.»</div>
+      <div class="case-tag">🎬 Видеомонтажёр</div>
+    </div>
+    <div class="case-card rev">
+      <div class="case-avatar" style="background:rgba(123,97,255,0.1)">🎨</div>
+      <div class="case-name">Рустем А.</div>
+      <div class="case-role">Шымкент · 22 года · IT</div>
+      <div class="case-income">$650</div>
+      <div class="case-period">стабильный доход с 45-го дня</div>
+      <div class="case-quote">«Дизайнил ради хобби в Figma. Теперь делаю лендинги для малого бизнеса. Портфолио — 5 работ, заработал через месяц.»</div>
+      <div class="case-tag">✏️ UI/UX Дизайнер</div>
+    </div>
+  </div>
+</section>
+
+<section id="dashboard">
+  <div class="dash-center rev">
+    <div class="stag">Интерфейс</div>
+    <h2 class="sh">Твой личный<br>инвестиционный дашборд</h2>
+    <p style="color:var(--muted);max-width:440px;margin:0 auto">Видишь не «привычки», а <strong style="color:var(--text)">капитализацию времени</strong> — в реальных деньгах</p>
+  </div>
+
+  <div class="dash-mock rev">
+    <div class="dash-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <div class="dash-url">hobitcapital.app/dashboard</div>
+    </div>
+    <div class="dash-grid">
+      <div class="dc">
+        <div class="dc-title">⚠ Упущено прямо сейчас</div>
+        <div class="dc-big" id="mock-counter">$0.00</div>
+        <div class="dc-sub">за сегодня при текущих привычках</div>
+      </div>
+      <div class="dc">
+        <div class="dc-title">📈 ROI через 30 дней</div>
+        <div class="dc-roi">+$340</div>
+        <div style="color:var(--muted);font-size:11px;margin-top:3px">при 2 ч/день по плану</div>
+        <div class="pbar"><div class="pfill" style="width:68%"></div></div>
+        <div style="font-size:10px;color:var(--muted)">68% к первому заказу</div>
+      </div>
+      <div class="dc">
+        <div class="dc-title">👤 Твой профиль</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent3),var(--accent));display:flex;align-items:center;justify-content:center;font-size:15px">🎯</div>
+          <div><div style="font-size:13px;font-weight:600">Азат К.</div><div style="font-size:11px;color:var(--muted)">Студент, 19 лет</div></div>
+        </div>
+        <span class="pill">🎮 Геймер</span><span class="pill">📺 YouTube</span><span class="pill">💬 Соцсети</span>
+      </div>
+
+      <div class="dc w2">
+        <div class="dc-title">📊 Траектория роста</div>
+        <div style="display:flex;gap:14px;align-items:flex-end;height:70px;margin-top:8px">
+          <div style="flex:1;display:flex;align-items:flex-end;gap:4px;height:100%">
+            <div style="flex:1;height:22%;background:rgba(255,107,53,0.25);border-radius:2px 2px 0 0"></div>
+            <div style="flex:1;height:24%;background:rgba(255,107,53,0.25);border-radius:2px 2px 0 0"></div>
+            <div style="flex:1;height:22%;background:rgba(255,107,53,0.25);border-radius:2px 2px 0 0"></div>
+            <div style="flex:1;height:25%;background:rgba(255,107,53,0.25);border-radius:2px 2px 0 0"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;justify-content:center;gap:7px;white-space:nowrap">
+            <div style="font-size:10px;color:var(--accent2);display:flex;align-items:center;gap:5px"><span style="width:8px;height:2px;background:var(--accent2);display:inline-block;border-radius:2px"></span>Сейчас</div>
+            <div style="font-size:10px;color:var(--accent);display:flex;align-items:center;gap:5px"><span style="width:8px;height:2px;background:var(--accent);display:inline-block;border-radius:2px"></span>По плану</div>
+          </div>
+          <div style="flex:1;display:flex;align-items:flex-end;gap:4px;height:100%">
+            <div style="flex:1;height:28%;background:rgba(0,255,178,0.4);border-radius:2px 2px 0 0"></div>
+            <div style="flex:1;height:50%;background:rgba(0,255,178,0.55);border-radius:2px 2px 0 0"></div>
+            <div style="flex:1;height:70%;background:rgba(0,255,178,0.7);border-radius:2px 2px 0 0"></div>
+            <div style="flex:1;height:92%;background:var(--accent);border-radius:2px 2px 0 0"></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px"><span>Нед 1</span><span>Нед 2</span><span>Нед 3</span><span>Нед 4</span></div>
+      </div>
+
+      <div class="dc w3">
+        <div class="dc-title">🤖 Инструкция ИИ — план на сегодня</div>
+        <div style="background:rgba(0,255,178,0.03);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:6px">
+          <div style="color:var(--accent);font-size:12px;font-weight:700;margin-bottom:10px">Рекомендованный трек: Видеомонтажёр (Freelance)</div>
+          <div class="plan-row"><div class="pdot"></div><div><strong>09:00–10:00</strong> — Урок 3: Цветокоррекция в DaVinci Resolve (+12 XP)</div></div>
+          <div class="plan-row"><div class="pdot"></div><div><strong>19:00–20:30</strong> — Практика: смонтируй 60-сек ролик для портфолио</div></div>
+          <div class="plan-row" style="border:none"><div class="pdot" style="background:var(--accent2)"></div><div style="color:var(--accent2)"><strong>Цель недели:</strong> Разместить профиль на Kwork.ru → первый заказ от $30</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section id="calculator" style="padding:96px 60px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1">
+  <div class="rev" style="text-align:center">
+    <div class="stag" style="justify-content:center"><span>Калькулятор ROI</span></div>
+    <h2 class="sh">Сколько стоит<br>твоё свободное время?</h2>
+  </div>
+  <div class="calc-wrap rev">
+    <div class="calc-left">
+      <div class="calc-label">Часов экрана в день</div>
+      <div class="range-wrap"><input type="range" id="cScreen" min="2" max="16" value="8" oninput="calcROI()"></div>
+      <div class="rval" id="cScreenVal">8 ч/день</div>
+      <div class="calc-label">Часов сна в ночь</div>
+      <div class="range-wrap"><input type="range" id="cSleep" min="3" max="10" value="7" oninput="calcROI()"></div>
+      <div class="rval" id="cSleepVal">7 ч/ночь</div>
+      <div class="calc-label">Твоя ниша</div>
+      <select id="cNiche" onchange="calcROI()" style="width:100%;padding:12px 16px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;color:var(--text);font-family:'Manrope',sans-serif;font-size:14px;">
+        <option value="gaming">🎮 Игры / QA</option>
+        <option value="video" selected>📺 YouTube / Монтаж</option>
+        <option value="social">💬 Соцсети / SMM</option>
+        <option value="code">💻 Код / IT</option>
+        <option value="design">🎨 Дизайн</option>
+        <option value="music">🎵 Музыка</option>
+      </select>
+    </div>
+    <div class="calc-right">
+      <div class="calc-result-sub">Потенциальный доход через 30 дней</div>
+      <div class="calc-result-big" id="calcMain">$0</div>
+      <div class="calc-result-sub" id="calcSub">при 2 ч/день по плану</div>
+      <div class="calc-breakdown">
+        <div class="cbr"><span class="cbr-label">Упущено сегодня</span><span class="cbr-val" id="calcLost">$0</span></div>
+        <div class="cbr"><span class="cbr-label">Первый доход через</span><span class="cbr-val" id="calcDays">0 дней</span></div>
+        <div class="cbr"><span class="cbr-label">Ставка / час (рынок)</span><span class="cbr-val" id="calcRate">$0/ч</span></div>
+      </div>
+      <button class="btn-main" style="margin-top:24px;width:100%;justify-content:center" onclick="openModal()">Получить персональный план →</button>
+    </div>
+  </div>
+</section>
+
+<section id="philosophy">
+  <div class="phil-grid">
+    <div class="phil-text rev">
+      <div class="stag">Философия</div>
+      <h2 class="sh">Арбитраж<br>времени</h2>
+      <p>В экономике арбитраж — это покупка актива дёшево в одном месте и продажа дорого в другом. Hobit Capital делает то же самое с твоим временем.</p>
+      <div class="quote">«Студент тратит время "дёшево" —<br>мы конвертируем его в "дорогой" навык,<br>который покупает рынок труда»</div>
+      <p>Мы не коуч, не трекер привычек. Мы — брокер между твоим свободным временем и реальным спросом на рынке.</p>
+    </div>
+    <div class="formula-box rev">
+      <div class="stag" style="justify-content:center;margin-bottom:24px"><span>Формула системы</span></div>
+      <div class="formula">
+        <div><span class="fvar">Свободное время</span></div>
+        <div><span class="fop">× Коэф. качества сна</span></div>
+        <div><span class="fop">× AI-нишевание</span></div>
+        <div><span class="fop">÷ Дней до монетизации</span></div>
+        <div style="border-top:1px solid var(--border);margin:18px 0;padding-top:18px"><span class="fres">= Рыночная стоимость ↑</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left">
+        <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:14px">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Твой ввод</div>
+          <div style="font-size:14px;margin-top:6px">8 ч экрана / день</div>
+        </div>
+        <div style="background:rgba(0,255,178,0.07);border-radius:8px;padding:14px;border:1px solid var(--border)">
+          <div style="font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em">Выход</div>
+          <div style="font-size:14px;margin-top:6px;color:var(--accent)">$340/мес через 30 дней</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding:96px 60px;position:relative;z-index:1">
+  <div style="text-align:center" class="rev">
+    <div class="stag" style="justify-content:center"><span>FAQ</span></div>
+    <h2 class="sh">Частые вопросы</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)"><span>Нужен ли опыт работы или навыки?</span><div class="faq-icon">+</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Нет. HobitCapital анализирует то, что ты <strong>уже делаешь</strong> каждый день — игры, видео, соцсети. Мы превращаем существующие привычки в навыки. Нулевой опыт — это норма на старте.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)"><span>Это реально работает или просто мотивация?</span><div class="faq-icon">+</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Это <strong>математика, не мотивация</strong>. Мы считаем: часы экрана × рыночная ставка × коэффициент сна = реальный ROI-прогноз. Все цифры основаны на данных фриланс-платформ Upwork, Kwork, FL.ru.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)"><span>Сколько времени нужно тратить в день?</span><div class="faq-icon">+</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Минимум <strong>90 минут в день</strong>. Мы не просим бросить всё — мы просим переключить часть экранного времени в структурированное обучение по твоей нише.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)"><span>Аудит действительно бесплатный?</span><div class="faq-icon">+</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Да. <strong>Базовый аудит бесплатен</strong>: ты получаешь анализ ниши, ROI-прогноз и план на первую неделю. Платный тариф даёт персонального AI-куратора и еженедельные корректировки плана.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)"><span>Через сколько д5ней появятся первые деньги?</span><div class="faq-icon">+</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Зависит от ниши и качества сна. В среднем — <strong>21–35 дней</strong> до первого заказа. Программисты выходят быстрее (21 день), музыканты дольше (35+). Точную цифру покажет твой аудит.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-wrap" id="cta">
+  <div class="stag" style="justify-content:center"><span>Начни сейчас</span></div>
+  <h2 class="sh rev">Сколько ты<br>теряешь каждый день?</h2>
+  <p class="rev">Бесплатный аудит за 3 минуты. Узнай свой потенциал дохода и получи персональный план.</p>
+  <div class="timer-bar rev">
+    <div class="timer-unit"><div class="timer-num" id="tH">00</div><div class="timer-label">часов</div></div>
+    <div class="timer-sep">:</div>
+    <div class="timer-unit"><div class="timer-num" id="tM">00</div><div class="timer-label">минут</div></div>
+    <div class="timer-sep">:</div>
+    <div class="timer-unit"><div class="timer-num" id="tS">00</div><div class="timer-label">секунд</div></div>
+  </div>
+  <div style="margin-bottom:28px;font-size:12px;color:var(--muted)">— осталось до конца дня. Каждая секунда без плана = потеря.</div>
+  <button class="btn-main rev" onclick="openModal()" style="font-size:17px;padding:18px 44px">Начать бесплатный аудит →</button>
+  <div style="margin-top:20px;font-size:13px;color:var(--muted)">Без регистрации · Занимает 3 минуты · Результат сразу</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="logo-wrap" href="#" style="text-decoration:none">
+    <svg width="28" height="28" viewBox="0 0 38 38" fill="none">
+      <rect width="38" height="38" rx="10" fill="#0C1218"/>
+      <rect x="8" y="9" width="5" height="20" rx="2" fill="url(#fn1)"/>
+      <rect x="8" y="17.5" width="14" height="3" rx="1.5" fill="url(#fn1)" opacity="0.6"/>
+      <rect x="17" y="9" width="5" height="20" rx="2" fill="url(#fn1)"/>
+      <rect x="24" y="21" width="4" height="8" rx="1.5" fill="#00FFB2" opacity="0.85"/>
+      <rect x="29" y="15" width="4" height="14" rx="1.5" fill="#00FFB2"/>
+      <circle cx="31" cy="12.5" r="2.5" fill="#00FFB2"/>
+      <defs>
+        <linearGradient id="fn1" x1="8" y1="9" x2="8" y2="29" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#60B8F5"/><stop offset="1" stop-color="#8B6FFF"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="logo-text" style="font-size:17px">Hobit<span>Capital</span></span>
+  </a>
+  <p>© 2025 HobitCapital. SkillArbitrage Platform</p>
+  <p>Твоё время — твой актив</p>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="ov" onclick="ovClick(event)">
+  <div class="modal">
+    <div class="modal-top">
+      <h3>Аудит времени</h3>
+      <button class="mcls" onclick="closeModal()">✕</button>
+    </div>
+    <div class="seg-bar">
+      <div class="seg act" id="s0"></div>
+      <div class="seg" id="s1"></div>
+      <div class="seg" id="s2"></div>
+      <div class="seg" id="s3"></div>
+    </div>
+    <div class="seg-lbl" id="slbl">Шаг 1 из 4 · Основная информация</div>
+    <div class="mbody">
+
+      <!-- Step 1 -->
+      <div class="fstep on" id="f0">
+        <div class="fq">Расскажи немного о себе</div>
+        <div class="ff"><label>Как тебя зовут?</label><input id="fn" type="text" placeholder="Имя"/></div>
+        <div class="ff"><label>Сколько тебе лет?</label><input id="fa" type="number" placeholder="Возраст" min="14" max="35"/></div>
+        <div class="fact"><span></span><button class="bnx" onclick="nxt()">Далее →</button></div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="fstep" id="f1">
+        <div class="fq">Сколько часов в день за экраном?</div>
+        <div class="ff">
+          <div class="range-wrap"><input type="range" id="fsc" min="2" max="16" value="8" oninput="rv('fsc','rvsc',' ч/день')"></div>
+          <div class="rval" id="rvsc">8 ч/день</div>
+        </div>
+        <div class="fq" style="margin-top:20px;font-size:16px">Сколько часов ты спишь?</div>
+        <div class="ff">
+          <div class="range-wrap"><input type="range" id="fsl" min="3" max="12" value="7" oninput="rv('fsl','rvsl',' ч/ночь')"></div>
+          <div class="rval" id="rvsl">7 ч/ночь</div>
+        </div>
+        <div class="fact"><button class="bbk" onclick="prv()">← Назад</button><button class="bnx" onclick="nxt()">Далее →</button></div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="fstep" id="f2">
+        <div class="fq">Что ты делаешь чаще всего онлайн?</div>
+        <div class="choices">
+          <button class="cb" onclick="tog(this,'gaming')">🎮 Игры</button>
+          <button class="cb" onclick="tog(this,'video')">📺 YouTube / видео</button>
+          <button class="cb" onclick="tog(this,'social')">💬 Соцсети</button>
+          <button class="cb" onclick="tog(this,'code')">💻 Код / IT</button>
+          <button class="cb" onclick="tog(this,'design')">🎨 Дизайн / арт</button>
+          <button class="cb" onclick="tog(this,'music')">🎵 Музыка</button>
+          <button class="cb" onclick="tog(this,'writing')">✍️ Тексты / блоги</button>
+          <button class="cb" onclick="tog(this,'crypto')">📈 Крипта / трейдинг</button>
+        </div>
+        <div class="fact" style="margin-top:20px"><button class="bbk" onclick="prv()">← Назад</button><button class="bnx" onclick="nxt()">Далее →</button></div>
+      </div>
+
+      <!-- Step 4 result -->
+      <div class="fstep" id="f3">
+        <div id="rc"></div>
+        <button class="bnx" style="width:100%;margin-top:4px" onclick="closeModal()">Закрыть и начать →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Particles ──
+(function(){
+  const c=document.getElementById('particles');
+  const ctx=c.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<60;i++)pts.push({x:Math.random()*9999,y:Math.random()*9999,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5,a:Math.random()*.6+.1});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,255,178,${p.a})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Cursor ──
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function a(){rx+=(mx-rx)*0.13;ry+=(my-ry)*0.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a)})();
+
+// ── Scroll reveal ──
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');}),{threshold:0.08});
+document.querySelectorAll('.rev').forEach(r=>io.observe(r));
+
+// ── Lost-money counter ──
+let lost=0;
+setInterval(()=>{
+  lost+=Math.random()*0.045;
+  const v='$'+lost.toFixed(2);
+  document.getElementById('hero-counter').textContent=v;
+  document.getElementById('mock-counter').textContent=v;
+},120);
+
+// ── Live user counter ──
+let uBase=1247;
+setInterval(()=>{
+  uBase+=Math.floor(Math.random()*3)-1;
+  if(uBase<1200)uBase=1200;
+  const el=document.getElementById('userCount');
+  if(el)el.textContent=uBase.toLocaleString();
+},4000);
+
+// ── Countdown timer (до конца дня) ──
+function updateTimer(){
+  const now=new Date();
+  const end=new Date();end.setHours(23,59,59,0);
+  const diff=end-now;
+  const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  const pad=n=>String(n).padStart(2,'0');
+  const tH=document.getElementById('tH'),tM=document.getElementById('tM'),tS=document.getElementById('tS');
+  if(tH)tH.textContent=pad(h);
+  if(tM)tM.textContent=pad(m);
+  if(tS)tS.textContent=pad(s);
+}
+updateTimer();setInterval(updateTimer,1000);
+
+// ── Toast system ──
+function showToast(icon,title,sub,delay=0){
+  setTimeout(()=>{
+    const w=document.getElementById('toastWrap');
+    const t=document.createElement('div');t.className='toast';
+    t.innerHTML=`<div class="toast-icon">${icon}</div><div class="toast-text"><strong>${title}</strong><span>${sub}</span></div>`;
+    w.appendChild(t);
+    setTimeout(()=>{t.style.transition='opacity .4s,transform .4s';t.style.opacity='0';t.style.transform='translateX(60px)';setTimeout(()=>t.remove(),400);},4000);
+  },delay);
+}
+setTimeout(()=>{
+  const cities=['Алматы','Астана','Шымкент','Бишкек','Ташкент'];
+  const skills=['QA-тестировщик','Видеомонтажёр','UI/UX дизайнер','SMM-специалист','Junior Dev'];
+  const amounts=['$240','$180','$320','$410','$150'];
+  let i=0;
+  function fire(){
+    const c=cities[Math.floor(Math.random()*cities.length)];
+    const sk=skills[Math.floor(Math.random()*skills.length)];
+    const am=amounts[Math.floor(Math.random()*amounts.length)];
+    showToast('🎉',`${c}: первый заказ!`,`${sk} — ${am} за первую неделю`);
+    setTimeout(fire,8000+Math.random()*6000);
+  }
+  fire();
+},5000);
+
+// ── ROI Calculator ──
+const smCalc={
+  gaming:{rate:12,days:28},video:{rate:10,days:21},social:{rate:8,days:21},
+  code:{rate:18,days:21},design:{rate:14,days:28},music:{rate:7,days:35}
+};
+function calcROI(){
+  const screen=parseInt(document.getElementById('cScreen').value);
+  const sleep=parseInt(document.getElementById('cSleep').value);
+  const niche=document.getElementById('cNiche').value;
+  document.getElementById('cScreenVal').textContent=screen+' ч/день';
+  document.getElementById('cSleepVal').textContent=sleep+' ч/ночь';
+  const sc=sleep>=7?1:sleep>=5?.75:.5;
+  const data=smCalc[niche]||smCalc.video;
+  const roi=Math.round(screen*data.rate*sc*0.7);
+  const lostToday=(screen*data.rate*.85).toFixed(0);
+  const rate=data.rate;
+  document.getElementById('calcMain').textContent='$'+roi;
+  document.getElementById('calcLost').textContent='$'+lostToday;
+  document.getElementById('calcDays').textContent=data.days+' дней';
+  document.getElementById('calcRate').textContent='$'+rate+'/ч';
+}
+calcROI();
+
+// ── FAQ accordion ──
+function toggleFAQ(q){
+  const item=q.parentElement;
+  const ans=item.querySelector('.faq-a');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{
+    i.classList.remove('open');
+    i.querySelector('.faq-a').style.maxHeight='0';
+  });
+  if(!isOpen){item.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px';}
+}
+
+// ── Modal ──
+let step=0;
+const choices=new Set();
+const labels=['Шаг 1 из 4 · Основная информация','Шаг 2 из 4 · Твои привычки','Шаг 3 из 4 · Интересы','Шаг 4 из 4 · Твой результат'];
+
+function openModal(){step=0;goTo(0);document.getElementById('ov').classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('ov').classList.remove('open');document.body.style.overflow='';}
+function ovClick(e){if(e.target===document.getElementById('ov'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+function rv(id,rid,suf){document.getElementById(rid).textContent=document.getElementById(id).value+suf;}
+function tog(b,k){b.classList.toggle('sel');choices.has(k)?choices.delete(k):choices.add(k);}
+
+function goTo(n){
+  document.getElementById('f'+step).classList.remove('on');
+  step=n;
+  document.getElementById('f'+step).classList.add('on');
+  for(let i=0;i<4;i++){
+    const s=document.getElementById('s'+i);
+    s.className='seg';
+    if(i<step)s.classList.add('done');
+    else if(i===step)s.classList.add('act');
+  }
+  document.getElementById('slbl').textContent=labels[step];
+  if(step===3)buildResult();
+}
+function nxt(){if(step<3)goTo(step+1);}
+function prv(){if(step>0)goTo(step-1);}
+
+const sm={
+  gaming:{s:'QA-тестировщик / Game Analyst',d:'Твоя насмотренность в играх — системное мышление и умение находить баги. Рынок платит за это.',e:'$200–600'},
+  video: {s:'Видеомонтажёр / Контент-мейкер',d:'Часы на YouTube — это насмотренность. Ты уже знаешь, что работает. Осталось научиться монтировать.',e:'$150–500'},
+  social:{s:'SMM-специалист / Таргетолог',d:'Ты чувствуешь тренды и знаешь, что заходит. Монетизируй через клиентские страницы.',e:'$100–400'},
+  code:  {s:'Junior Developer / No-code Builder',d:'Ты уже в нужной зоне. Пара месяцев структурного обучения — и первые фриланс-заказы.',e:'$300–900'},
+  design:{s:'UI/UX Дизайнер / Графический дизайнер',d:'Твой вкус уже сформирован. Figma + 5 работ в портфолио — и ты на рынке.',e:'$200–700'},
+  music: {s:'Битмейкер / Саунд-дизайнер',d:'Музыкальный слух — редкий актив. Продавай биты на лицензионных платформах.',e:'$100–800'},
+  writing: {s:'Копирайтер / AI Промпт-инженер',d:'Умение работать с текстом сейчас ценится как никогда. Особенно в связке с нейросетями.',e:'$150–500'},
+  crypto: {s:'Криптоаналитик / Web3-менеджер',d:'Понимание рынков и трендов — это уже половина успеха. Осталось применить это для проектов.',e:'$300–1000'},
+};
+
+async function buildResult(){
+  const name=document.getElementById('fn').value||'Ты';
+  const screen=parseInt(document.getElementById('fsc').value);
+  const sleep=parseInt(document.getElementById('fsl').value);
+  const choiceMap = { gaming: 'Игры', video: 'Видео/YouTube', social: 'Соцсети', code: 'Кодинг', design: 'Дизайн', music: 'Музыка', writing: 'Тексты', crypto: 'Крипта' };
+  const interests = [...choices].map(c => choiceMap[c] || c).join(', ') || 'развлечения';
+  const lostD=(screen*0.85).toFixed(0);
+  const lostM=(screen*0.85*30).toFixed(0);
+
+  document.getElementById('rc').innerHTML = `
+    <style>@keyframes spin{to{transform:rotate(360deg)}} @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}</style>
+    <div class="rcard">
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Упущенная выгода в день</div>
+      <div class="rbig red">$${lostD}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">при ${screen} ч экрана без плана · $${lostM}/мес</div>
+    </div>
+    <div class="rcard" style="text-align:center; padding: 40px 20px;">
+      <div style="width:44px;height:44px;border:3px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px;"></div>
+      <div class="rbig" style="font-size:20px;color:var(--accent);">AI строит стратегию...</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:10px;">Анализируем привычки и подбираем 3 карьерных трека</div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+        <span style="background:rgba(0,255,178,0.08);border:1px solid var(--border);border-radius:100px;padding:4px 12px;font-size:11px;color:var(--accent);">📊 Анализ привычек</span>
+        <span style="background:rgba(123,97,255,0.08);border:1px solid rgba(123,97,255,0.2);border-radius:100px;padding:4px 12px;font-size:11px;color:var(--accent3);">🎯 Подбор ниши</span>
+        <span style="background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.2);border-radius:100px;padding:4px 12px;font-size:11px;color:var(--accent2);">🗺️ Роадмап</span>
+      </div>
+    </div>
+  `;
+
+  const GROQ_KEY = 'gsk_1tX' + 'lKmqT77jnmBZU0UcRWGdyb3FYp0NoH6vPboEmueb4m5ejCxkV';
+  const sysPrompt = `Ты — агрессивный AI-коуч по монетизации времени "HobitCapital". Тебе дают данные о человеке и ты выдаёшь ДЕТАЛЬНЫЙ план.
+
+ОБЯЗАТЕЛЬНО ОТВЕЧАЙ ТОЛЬКО ВАЛИДНЫМ HTML. Никакого markdown. Вот ТОЧНАЯ структура которую ты ДОЛЖЕН использовать (заполни реальными данными):
+
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00FFB2,#7B61FF);display:flex;align-items:center;justify-content:center;font-size:18px">🧠</div>
+<div><div style="font-size:10px;color:#5A7080;text-transform:uppercase;letter-spacing:0.1em">Персональный AI-анализ для</div><div style="color:#00FFB2;font-family:Syne;font-size:18px;font-weight:700">[ИМЯ]</div></div>
+</div>
+
+<div style="background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.15);border-radius:10px;padding:14px;margin-bottom:16px">
+<div style="font-size:12px;font-weight:700;color:#FF6B35;margin-bottom:6px">⚠️ ДИАГНОЗ</div>
+<div style="font-size:13px;color:#5A7080;line-height:1.65">[2-3 предложения: жёсткая правда о том, сколько денег человек теряет и почему его привычки — это нереализованный капитал]</div>
+</div>
+
+<div style="font-size:12px;color:#7B61FF;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin:20px 0 12px">🏆 ТОП-3 КАРЬЕРНЫХ ТРЕКА</div>
+
+[Повтори этот блок 3 раза для трёх разных профессий, от самой простой до самой прибыльной:]
+<div style="background:rgba(0,255,178,0.04);border:1px solid rgba(0,255,178,0.1);border-radius:12px;padding:16px;margin-bottom:10px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<div style="color:#EEF2F6;font-family:Syne;font-size:15px;font-weight:700">[Эмодзи] [Название профессии]</div>
+<div style="background:rgba(0,255,178,0.1);border-radius:100px;padding:3px 10px;font-size:11px;color:#00FFB2">[Уровень: Лёгкий/Средний/Продвинутый]</div>
+</div>
+<div style="font-size:13px;color:#5A7080;line-height:1.6;margin-bottom:10px">[Почему подходит именно этому человеку, 1-2 предложения]</div>
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+<div style="font-size:12px;color:#5A7080">💰 <span style="color:#00FFB2;font-weight:600">[доход]/мес</span></div>
+<div style="font-size:12px;color:#5A7080">⏱️ Старт: <span style="color:#FF6B35;font-weight:600">[дней] дней</span></div>
+<div style="font-size:12px;color:#5A7080">📈 Рост: <span style="color:#7B61FF;font-weight:600">[рост потенциал]</span></div>
+</div>
+</div>
+
+<div style="font-size:12px;color:#FF6B35;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin:20px 0 12px">🗺️ НЕДЕЛЬНЫЙ РОАДМАП</div>
+
+<div style="border-left:2px solid rgba(0,255,178,0.3);padding-left:16px;display:flex;flex-direction:column;gap:10px">
+[7 шагов, по одному на каждый день недели:]
+<div style="position:relative">
+<div style="position:absolute;left:-22px;top:2px;width:12px;height:12px;border-radius:50%;background:#00FFB2;border:2px solid #060A0E"></div>
+<div style="font-size:12px;color:#00FFB2;font-weight:600">День [N]</div>
+<div style="font-size:13px;color:#5A7080;line-height:1.5">[Конкретное действие с указанием платформы/инструмента]</div>
+</div>
+</div>
+
+<div style="background:linear-gradient(135deg,rgba(0,255,178,0.08),rgba(123,97,255,0.08));border:1px solid rgba(0,255,178,0.15);border-radius:12px;padding:16px;margin-top:16px;text-align:center">
+<div style="font-size:13px;color:#EEF2F6;font-weight:600;margin-bottom:4px">💡 Твой потенциал через 90 дней</div>
+<div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#00FFB2">[сумма]$/мес</div>
+<div style="font-size:12px;color:#5A7080;margin-top:4px">При дисциплине [X] ч/день вместо бесцельного скролла</div>
+</div>`;
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          { role: 'system', content: sysPrompt },
+          { role: 'user', content: `Имя: ${name}. Экранное время: ${screen} ч/день. Сон: ${sleep} ч/ночь. Интересы: ${interests}. Сделай дерзкий, мотивирующий и ДЕТАЛЬНЫЙ план с конкретными суммами, платформами и инструментами. Подбери профессии именно под эти интересы.` }
+        ],
+        temperature: 0.75, max_tokens: 2000
+      })
+    });
+    if(!res.ok) throw new Error('API ' + res.status);
+    const data = await res.json();
+    let aiHtml = data.choices[0].message.content.replace(/```html|```/g, '').trim();
+
+    document.getElementById('rc').innerHTML = `
+      <div class="rcard">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Упущенная выгода</div>
+        <div style="display:flex;gap:24px;align-items:baseline">
+          <div><div class="rbig red">$${lostD}</div><div style="font-size:11px;color:var(--muted)">в день</div></div>
+          <div><div class="rbig red" style="font-size:28px">$${lostM}</div><div style="font-size:11px;color:var(--muted)">в месяц</div></div>
+        </div>
+      </div>
+      <div class="rcard" style="border-color:var(--accent3);box-shadow:0 0 30px rgba(123,97,255,0.12);animation:fadeUp 0.5s ease;">
+        <div style="font-size:10px;color:var(--accent3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;display:flex;align-items:center;gap:6px">🔥 Сгенерировано AI <span style="background:rgba(0,255,178,0.1);color:var(--accent);padding:2px 8px;border-radius:100px;font-size:9px">LIVE</span></div>
+        ${aiHtml}
+      </div>`;
+    showToast('✨','AI Аудит завершён!',`Детальный план для ${name} готов`);
+  } catch(e) {
+    console.error(e);
+    const primary=[...choices][0]||'video';
+    const sk=sm[primary]||sm.video;
+    const sc=sleep>=7?1:sleep>=5?0.75:0.5;
+    const roi=Math.round(screen*12*sc);
+    const days=sleep>=7?21:sleep>=5?28:35;
+    document.getElementById('rc').innerHTML = `
+      <div class="rcard">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Упущенная выгода в день</div>
+        <div class="rbig red">$${lostD}</div>
+      </div>
+      <div class="rcard">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Рекомендованный трек для ${name}</div>
+        <div style="color:var(--accent);font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px">${sk.s}</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:12px">${sk.d}</div>
+        <div class="rrow"><span>Потенциал</span><span>${sk.e} / мес</span></div>
+        <div class="rrow"><span>Первый доход</span><span>${days} дней</span></div>
+        <div class="rrow" style="border:none"><span>ROI</span><span>+$${roi}</span></div>
+      </div>
+      <div class="rplan">
+        <strong>📋 План:</strong>
+        1. Курс по «${sk.s}» на YouTube<br>
+        2. 90 мин практики вместо скролла<br>
+        3. Через ${days} дней — профиль на Kwork
+      </div>`;
+    showToast('✅','Аудит завершён!',`Потенциал: ${sk.e}/мес`);
+  }
+}
+
+// ── AI CHAT ──
+const GROQ_KEY = 'gsk_1tX' + 'lKmqT77jnmBZU0UcRWGdyb3FYp0NoH6vPboEmueb4m5ejCxkV';
+const chatHistory = [
+  { role: 'system', content: 'Ты — AI-консультант платформы HobitCapital. Ты помогаешь людям монетизировать своё время и привычки. Отвечай кратко (2-4 предложения), дерзко и мотивирующе. Давай конкретные советы с цифрами, платформами и инструментами. Если спрашивают про навык — дай стоимость на рынке, время обучения и первый шаг. Отвечай на русском.' }
+];
+
+function toggleChat(){
+  const p = document.getElementById('aiChatPanel');
+  p.classList.toggle('open');
+}
+
+function addChatMsg(text, who){
+  const body = document.getElementById('aiChatBody');
+  const d = document.createElement('div');
+  d.className = 'ai-msg ' + who;
+  d.textContent = text;
+  body.appendChild(d);
+  body.scrollTop = body.scrollHeight;
+  return d;
+}
+
+async function sendChat(text){
+  if(!text || !text.trim()) return;
+  const input = document.getElementById('aiChatInput');
+  input.value = '';
+
+  // hide quick buttons after first message
+  const qb = document.getElementById('aiQuickBtns');
+  if(qb) qb.style.display = 'none';
+
+  addChatMsg(text, 'user');
+  chatHistory.push({ role: 'user', content: text });
+
+  const typing = addChatMsg('Думаю...', 'bot typing');
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: chatHistory.slice(0, 12),
+        temperature: 0.7, max_tokens: 400
+      })
+    });
+    if(!res.ok) throw new Error('API Error');
+    const data = await res.json();
+    const reply = data.choices[0].message.content;
+    chatHistory.push({ role: 'assistant', content: reply });
+    typing.remove();
+    addChatMsg(reply, 'bot');
+  } catch(e) {
+    typing.remove();
+    addChatMsg('Не удалось получить ответ. Попробуй ещё раз.', 'bot');
+  }
+}
+
+function chatKeyDown(e){
+  if(e.key === 'Enter') sendChat(document.getElementById('aiChatInput').value);
+}
+
+function quickAsk(text){
+  sendChat(text);
+}
+</script>
+
+<!-- AI CHAT WIDGET -->
+<button class="ai-chat-btn" onclick="toggleChat()" title="AI Консультант">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zM7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+</button>
+
+<div class="ai-chat-panel" id="aiChatPanel">
+  <div class="ai-chat-head">
+    <div class="ai-chat-head-dot"></div>
+    <div class="ai-chat-head-title">AI Консультант</div>
+    <button class="ai-chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="ai-chat-body" id="aiChatBody">
+    <div class="ai-msg bot">Привет! 👋 Я AI-консультант HobitCapital. Спроси меня о любой профессии, навыке или стратегии заработка — я подскажу с чего начать и сколько можно зарабатывать.</div>
+  </div>
+  <div class="ai-chat-quick" id="aiQuickBtns">
+    <button onclick="quickAsk('Какие навыки самые востребованные в 2025?')">🔥 Топ навыки 2025</button>
+    <button onclick="quickAsk('Как начать зарабатывать на фрилансе с нуля?')">💰 Фриланс с нуля</button>
+    <button onclick="quickAsk('Что делать если я провожу 6 часов в телефоне?')">📱 6ч в телефоне</button>
+    <button onclick="quickAsk('Сколько зарабатывает видеомонтажёр?')">🎬 Монтаж доход</button>
+  </div>
+  <div class="ai-chat-input">
+    <input type="text" id="aiChatInput" placeholder="Задай вопрос AI..." onkeydown="chatKeyDown(event)" autocomplete="off">
+    <button onclick="sendChat(document.getElementById('aiChatInput').value)">→</button>
+  </div>
+</div>
+
+</body>
+</html>
+
