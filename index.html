@@ -257,11 +257,40 @@
   .ai-chat-quick button:hover { border-color:var(--accent);color:var(--accent); }
 
   @media(max-width:900px){
-    .cases-grid{grid-template-columns:1fr;}.calc-wrap{grid-template-columns:1fr;}.phil-grid{grid-template-columns:1fr;}
-    nav{padding:14px 20px;}.hero{padding:100px 20px 60px;}.section{padding:60px 20px;}
-    .steps{grid-template-columns:1fr;}.proof-bar{gap:16px;flex-wrap:wrap;padding:14px 20px;}
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none !important; }
+    .btn-main, .btn-outline, .mcls, .cb, .bbk, .bnx, .ai-chat-btn, .ai-chat-close, .ai-chat-input button, .ai-chat-quick button { cursor: pointer; }
+    .cases-grid{grid-template-columns:1fr;}
+    .calc-wrap{grid-template-columns:1fr;}
+    .phil-grid{grid-template-columns:1fr;}
+    nav{padding:14px 20px;}
+    .nav-links { display:none; }
+    .hero{padding:120px 20px 60px; flex-direction:column; text-align:center; align-items:center;}
+    .hero-content { margin:0 auto; }
+    .hero-btns { justify-content:center; flex-wrap:wrap; }
+    .hero-float { position:relative; right:auto; top:auto; transform:none; flex-direction:row; justify-content:center; margin-top:40px; flex-wrap:wrap; }
+    section{padding:60px 20px;}
+    .steps{grid-template-columns:1fr;}
+    .proof-bar{gap:16px;flex-wrap:wrap;padding:14px 20px;}
     .ai-chat-panel{left:12px;right:12px;width:auto;bottom:96px;}
     .ai-chat-btn{left:16px;bottom:16px;width:52px;height:52px;}
+    .dash-grid{grid-template-columns:1fr;}
+    .dc.w2, .dc.w3 {grid-column:span 1;}
+    .process-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+  }
+  @media(max-width:600px){
+    .hero h1 { font-size: clamp(38px, 10vw, 52px); letter-spacing: -1.5px; }
+    .modal { margin: 10px; width: calc(100% - 20px); }
+    .modal-top { padding: 20px 20px 0; }
+    .mbody { padding: 20px; }
+    .seg-bar { padding: 16px 20px 0; }
+    .choices { grid-template-columns: 1fr; }
+    .toast-wrap { bottom: 90px; right: 16px; left: 16px; }
+    .toast { min-width: 100%; max-width: 100%; }
+    .dash-mock { border-radius: 12px; }
+    .calc-left, .calc-right { padding: 24px; }
+    .step { padding: 30px 24px; }
   }
 </style>
 </head>
